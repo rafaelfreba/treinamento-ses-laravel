@@ -14,10 +14,8 @@ class PatientController extends Controller
      */
     public function index(Patient $patients)
     {
-        // $patients = Patient::with('county')->get(); //'SELECT * FROM patients INNER JOIN ... '
-        
         return view('patients.index', [
-            'patients' => $patients::with('county')->get()
+            'patients' => $patients::with('county')->paginate(10)
         ]);
     }
 
@@ -28,7 +26,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        //
+        return view('patients.create');
     }
 
     /**
@@ -39,7 +37,7 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd( $request->all() );
     }
 
     /**
@@ -50,7 +48,9 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        //
+        return view('patients.show', [
+            'patient' => $patient
+        ]);
     }
 
     /**
@@ -61,7 +61,9 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        //
+        return view('patients.edit', [
+            'patient' => $patient
+        ]);
     }
 
     /**
@@ -73,7 +75,7 @@ class PatientController extends Controller
      */
     public function update(Request $request, Patient $patient)
     {
-        //
+        dd( $request->all() );
     }
 
     /**
@@ -84,6 +86,6 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        dd( $patient );
     }
 }
