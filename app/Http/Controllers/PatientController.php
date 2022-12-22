@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatientRequest;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 
@@ -35,9 +36,13 @@ class PatientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PatientRequest $request, Patient $patient)
     {
-        dd( $request->all() );
+        $patient::create(
+            $request->safe()->all()
+        );
+
+        return redirect('patients')->withSuccess('Paciente criado com sucesso!');
     }
 
     /**
@@ -49,7 +54,7 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         return view('patients.show', [
-            'patient' => $patient
+            'patient' => $patient->load('county')
         ]);
     }
 
@@ -73,9 +78,13 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(PatientRequest $request, Patient $patient)
     {
-        dd( $request->all() );
+        $patient->update(
+            $request->safe()->all()
+        );
+
+        return redirect('/patients')->withSuccess('Paciente atualizado com sucesso!');
     }
 
     /**
@@ -86,6 +95,8 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        dd( $patient );
+        $patient->delete();
+
+        return redirect('patients')->withSuccess('Paciente apagado com sucesso!');
     }
 }
