@@ -19,9 +19,9 @@ class Patient extends Model
         'county_id'
     ];
 
-    protected $casts = [
-        'birth' => 'date: d/m/Y'
-    ];
+    // protected $casts = [
+    //     'birth' => 'date: d/m/Y'
+    // ];
 
     public function county()
     {
